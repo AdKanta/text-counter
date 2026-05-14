@@ -1,4 +1,4 @@
-const CACHE_NAME = 'apple-counter-cache-v1';
+const CACHE_NAME = 'apple-counter-cache-v2';
 const urlsToCache = [
   './',
   './index.html',
