@@ -197,18 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let currentLang = savedLang || detectedLang;
     
-    const langSelectedBtn = document.getElementById('lang-selected');
-    const langOptions = document.getElementById('lang-options');
+    const langSelect = document.getElementById('lang-select');
 
     const updateLanguage = (lang) => {
         currentLang = lang;
         localStorage.setItem('lang', lang);
         
-        // Update selected button text based on data-val
-        const selectedOption = document.querySelector(`li[data-val="${lang}"]`);
-        if (selectedOption) {
-            langSelectedBtn.textContent = selectedOption.textContent;
-        }
+        // Update native select
+        langSelect.value = lang;
         
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
@@ -233,43 +229,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Toggle dropdown
-    langSelectedBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langOptions.classList.toggle('show');
-    });
-
-    // Handle option click
-    langOptions.addEventListener('click', (e) => {
-        if (e.target.tagName === 'LI') {
-            const newLang = e.target.getAttribute('data-val');
-            updateLanguage(newLang);
-            langOptions.classList.remove('show');
-        }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!langSelectedBtn.contains(e.target) && !langOptions.contains(e.target)) {
-            langOptions.classList.remove('show');
-        }
+    langSelect.addEventListener('change', (e) => {
+        updateLanguage(e.target.value);
     });
 
     // Theme Management
+    const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (theme) => {
+        htmlElement.setAttribute('data-theme', theme);
+    };
+
+    // Initialize Theme
     const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
     if (savedTheme) {
-        htmlElement.setAttribute('data-theme', savedTheme);
-    } else if (systemPrefersDark) {
-        htmlElement.setAttribute('data-theme', 'dark');
+        applyTheme(savedTheme);
+    } else {
+        applyTheme(prefersDarkQuery.matches ? 'dark' : 'light');
     }
 
+    // Listen to system theme changes
+    prefersDarkQuery.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
     themeToggle.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
+        const currentTheme = htmlElement.getAttribute('data-theme') || 'light';
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        htmlElement.setAttribute('data-theme', newTheme);
+        applyTheme(newTheme);
         localStorage.setItem('theme', newTheme);
     });
 
