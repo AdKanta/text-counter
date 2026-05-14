@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字数カウンター | Apple Style</title>
+    <meta name="description" content="Appleデザインを彷彿とさせる、シンプルで洗練された文字数カウンター。ライトモード・ダークモード対応。">
+    
+    <!-- PWA / iOS App Settings -->
+    <meta name="theme-color" content="#F5F5F7">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Counter">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <h1 data-i18n="title">文字数カウンター</h1>
+                <div class="header-actions">
+                    <div class="custom-select" id="lang-select-container">
+                        <button id="lang-selected" class="lang-selected" aria-label="Language selection">JA</button>
+                        <ul id="lang-options" class="lang-options">
+                            <li data-val="ja">日本語</li>
+                            <li data-val="en">English</li>
+                            <li data-val="es">Español</li>
+                            <li data-val="fr">Français</li>
+                            <li data-val="de">Deutsch</li>
+                            <li data-val="it">Italiano</li>
+                            <li data-val="pt">Português</li>
+                            <li data-val="ru">Русский</li>
+                            <li data-val="zh-CN">简体中文</li>
+                            <li data-val="zh-TW">繁體中文</li>
+                            <li data-val="ko">한국어</li>
+                            <li data-val="hi">हिन्दी</li>
+                            <li data-val="ar">العربية</li>
+                        </ul>
+                    </div>
+                    <button id="theme-toggle" class="icon-btn" aria-label="テーマ切り替え">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <textarea id="text-input" data-i18n-placeholder="placeholder" placeholder="ここにテキストを入力またはペーストしてください..." spellcheck="false"></textarea>
+                <div class="actions">
+                    <button id="clear-btn" class="secondary-btn" data-i18n="clear">クリア</button>
+                    <button id="copy-btn" class="primary-btn" data-i18n="copy">コピー</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label" data-i18n="label-chars">文字数 (空白込み)</span>
+                    <span id="char-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label" data-i18n="label-chars-no-space">文字数 (空白抜き)</span>
+                    <span id="char-no-space-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label" data-i18n="label-words">単語数</span>
+                    <span id="word-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label" data-i18n="label-lines">行数</span>
+                    <span id="line-count" class="stat-value">0</span>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p data-i18n="footer">&copy; 2026 Minimalist Text Counter. Designed with Apple Aesthetics.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
