@@ -227,6 +227,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.documentElement.setAttribute('dir', 'ltr');
         }
+
+        // Hint to iOS/iPadOS keyboards to switch to the selected language
+        document.documentElement.lang = lang;
+        const textInput = document.getElementById('text-input');
+        if (textInput) {
+            textInput.lang = lang;
+        }
     };
 
     langSelect.addEventListener('change', (e) => {
